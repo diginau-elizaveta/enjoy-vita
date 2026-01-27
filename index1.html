@@ -58,18 +58,13 @@
             100% { box-shadow: 0 0 10px var(--purple-glow); transform: translate(-50%, -50%) scale(1); }
         }
 
-        /* --- NEW DIGITAL BACKGROUND (PARTICLES) --- */
+        /* --- BACKGROUND (PARTICLES) --- */
         #particles-js {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1; /* Behind content */
-            background-color: var(--bg-color); /* Base background color */
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; background-color: var(--bg-color);
         }
 
-        /* --- TYPOGRAPHY --- */
+        /* --- TYPOGRAPHY & ANIMATIONS --- */
         h1, h2, h3, h4 {
             font-family: var(--font-head);
             text-transform: uppercase;
@@ -93,7 +88,7 @@
             color: white; font-family: var(--font-head);
             font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase;
             backdrop-filter: blur(10px); transition: all 0.4s ease;
-            position: relative; overflow: hidden;
+            position: relative; overflow: visible;
             text-align: center;
         }
         .btn-glow:hover {
@@ -124,29 +119,81 @@
         .hamburger { display: none; flex-direction: column; gap: 6px; cursor: pointer; padding: 10px; }
         .bar { width: 30px; height: 2px; background-color: white; transition: 0.3s; }
 
-        /* --- HERO --- */
+        /* --- HERO SPECIAL STYLES --- */
         .hero {
             min-height: 100vh; display: flex; align-items: center;
             justify-content: center; text-align: center; padding-top: 80px;
             padding-bottom: 40px;
         }
         .hero-content { max-width: 900px; z-index: 2; width: 100%; }
+        
+        /* HORROR BREATH TEXT ANIMATION */
         .hero h1 {
             font-size: clamp(2rem, 8vw, 3.5rem);
             margin-bottom: 25px; line-height: 1.2;
-            opacity: 0; animation: fadeUp 1s forwards 0.5s;
+            opacity: 1; /* Changed from 0 for the animation loop */
             word-wrap: break-word; overflow-wrap: break-word; padding: 0 10px;
+            animation: horrorBreath 5s infinite ease-in-out;
         }
+        
+        @keyframes horrorBreath {
+            0% { 
+                text-shadow: 0 0 10px rgba(0,0,0,0.8); 
+                transform: scale(1);
+                color: #f5f5f5;
+            }
+            50% { 
+                text-shadow: 0 0 30px rgba(100, 0, 100, 0.6), 5px 10px 15px rgba(0,0,0,0.9); /* Shadow playing */
+                transform: scale(1.02); /* Breathing out */
+                color: #e0e0e0;
+                letter-spacing: 0.06em;
+            }
+            100% { 
+                text-shadow: 0 0 10px rgba(0,0,0,0.8); 
+                transform: scale(1);
+                color: #f5f5f5;
+            }
+        }
+
         .hero p {
             font-size: clamp(1rem, 4vw, 1.1rem);
             color: var(--text-muted); margin-bottom: 40px;
-            opacity: 0; animation: fadeUp 1s forwards 0.8s;
             padding: 0 10px;
+            animation: fadeUp 1s forwards 0.5s; opacity: 0;
         }
         .hero-final {
             display: block; margin-top: 25px; font-family: var(--font-head);
             font-size: clamp(1.1rem, 5vw, 1.3rem); color: white; letter-spacing: 0.15em;
         }
+
+        /* ELECTRIC BUTTON ANIMATION (FAST) */
+        .btn-electric {
+            width: 100%; max-width: 300px;
+            animation: electricShock 2s infinite;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: none;
+        }
+
+        /* ELECTRIC BUTTON ANIMATION (SLOW - FOR FOOTER) */
+        .btn-electric-slow {
+            width: 100%; max-width: 300px;
+            animation: electricShock 6s infinite; /* Slowed down to 6s */
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: none;
+        }
+        
+        @keyframes electricShock {
+            0% { box-shadow: 0 0 5px rgba(140, 100, 255, 0.2); border-color: rgba(255,255,255,0.2); }
+            48% { box-shadow: 0 0 5px rgba(140, 100, 255, 0.2); border-color: rgba(255,255,255,0.2); }
+            49% { box-shadow: 0 0 20px #fff, 0 0 10px #8C64FF; border-color: #fff; } /* FLASH */
+            50% { box-shadow: 0 0 5px rgba(140, 100, 255, 0.2); border-color: rgba(255,255,255,0.2); }
+            52% { box-shadow: 0 0 25px #8C64FF, 0 0 40px rgba(140, 100, 255, 0.5); border-color: #8C64FF; } /* PULSE */
+            54% { box-shadow: 0 0 5px rgba(140, 100, 255, 0.2); border-color: rgba(255,255,255,0.2); }
+            95% { box-shadow: 0 0 5px rgba(140, 100, 255, 0.2); border-color: rgba(255,255,255,0.2); }
+            96% { box-shadow: 0 0 15px #fff; border-color: #fff; } /* MINI FLASH */
+            100% { box-shadow: 0 0 5px rgba(140, 100, 255, 0.2); border-color: rgba(255,255,255,0.2); }
+        }
+
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -161,15 +208,40 @@
             transition: transform 0.4s ease, border-color 0.4s ease;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); height: 100%;
         }
-        .price-card-layout {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+
+        /* PULSATING BORDER FOR ABOUT SECTION (SLOWED DOWN) */
+        #about .premium-card {
+            animation: purpleBorderPulse 8s infinite ease-in-out; /* Changed from 3s to 8s */
         }
-        .price-list {
-            flex-grow: 1;
-            margin-bottom: 25px;
+
+        @keyframes purpleBorderPulse {
+            0% { border-color: rgba(140, 100, 255, 0.1); box-shadow: 0 0 0 rgba(140, 100, 255, 0); }
+            50% { border-color: #8C64FF; box-shadow: 0 0 15px rgba(140, 100, 255, 0.3); }
+            100% { border-color: rgba(140, 100, 255, 0.1); box-shadow: 0 0 0 rgba(140, 100, 255, 0); }
         }
+
+        /* PULSATING FOR BENEFITS SECTION (NEW) */
+        @keyframes benefitsGlow {
+            0% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.05); border-color: rgba(255,255,255,0.1); }
+            50% { box-shadow: 0 0 20px rgba(140, 100, 255, 0.2); border-color: rgba(140, 100, 255, 0.3); }
+            100% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.05); border-color: rgba(255,255,255,0.1); }
+        }
+        #benefits .premium-card {
+            animation: benefitsGlow 8s infinite ease-in-out;
+        }
+
+        /* GOLD PULSATION FOR PRICE SECTION (NEW) */
+        @keyframes goldPulse {
+            0% { border-color: rgba(255, 215, 0, 0.2); box-shadow: 0 0 5px rgba(255, 215, 0, 0.05); }
+            50% { border-color: rgba(255, 215, 0, 0.8); box-shadow: 0 0 35px rgba(255, 215, 0, 0.35); }
+            100% { border-color: rgba(255, 215, 0, 0.2); box-shadow: 0 0 5px rgba(255, 215, 0, 0.05); }
+        }
+        .price-grid .premium-card {
+            animation: goldPulse 6s infinite ease-in-out;
+        }
+
+        .price-card-layout { display: flex; flex-direction: column; justify-content: space-between; }
+        .price-list { flex-grow: 1; margin-bottom: 25px; }
 
         .premium-card::before {
             content: ''; position: absolute; top: 0; left: -150%;
@@ -178,8 +250,8 @@
             transform: skewX(-20deg); transition: left 0.5s; pointer-events: none;
         }
         .premium-card:hover {
-            transform: translateY(-7px); border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8), 0 0 20px rgba(140, 100, 255, 0.15);
+            transform: translateY(-7px);
+            /* hover overrides handled by specific section animations if needed, but transform remains */
         }
         .premium-card:hover::before { left: 150%; transition: left 0.7s ease-in-out; }
 
@@ -367,7 +439,7 @@
                 Разрешишь себе быть яркой, свободной, женственной.
                 <span class="hero-final">Я ЛЮБЛЮ СЕБЯ. У МЕНЯ ЕСТЬ СВОБОДА БЫТЬ СОБОЙ.</span>
             </p>
-            <button class="btn-glow open-modal-btn" style="width: 100%; max-width: 300px;">Начать трансформацию</button>
+            <button class="btn-glow btn-electric open-modal-btn">Начать трансформацию</button>
         </div>
     </section>
 
@@ -587,7 +659,7 @@
     <footer class="footer">
         <div class="container">
             <h3 style="margin-bottom: 30px;">Готова изменить свою жизнь?</h3>
-            <button class="btn-glow open-modal-btn" style="margin-bottom: 40px;">Подать заявку</button>
+            <button class="btn-glow btn-electric-slow open-modal-btn" style="margin-bottom: 40px;">Подать заявку</button>
             
             <div class="social-block">
                 <a href="https://www.instagram.com/liza_enjoyvita?igsh=NWoxOHhnbTU1ajhy" target="_blank" class="social-link">
@@ -601,7 +673,7 @@
                                 <stop offset="90%" style="stop-color:#285AEB;stop-opacity:1" />
                             </linearGradient>
                         </defs>
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                     <span>Instagram</span>
                 </a>
                 
